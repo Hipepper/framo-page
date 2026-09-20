@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n="priv_meta_title">隐私政策 (Privacy Policy) — FramerSnap</title>
+  <meta name="description" data-i18n-content="priv_meta_desc" content="FramerSnap 隐私政策：100% 本地离线处理，严密守护您的摄影资产与个人数据隐私。" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+  <link rel="shortcut icon" href="assets/favicon.ico" />
+  <style>
+    :root {
+      --ink: #090a0d; --ink-2: #12141a; --paper: #f5f3ed; --white: #ffffff;
+      --muted: #92969f; --muted-dark: #5c6069; --blue: #6b8cff; --blue-2: #9bacff;
+      --line: rgba(255,255,255,.13); --radius: 18px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--ink); color: var(--white);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", sans-serif;
+      line-height: 1.7; letter-spacing: -0.015em;
+    }
+    a { color: var(--blue-2); text-decoration: none; transition: color .2s; }
+    a:hover { color: #fff; text-decoration: underline; }
+    .wrap { width: min(860px, calc(100% - 48px)); margin: auto; }
+    header {
+      padding: 40px 0 20px; border-bottom: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 11px; font-weight: 750;
+      color: #fff; font-size: 1.1rem; letter-spacing: -.04em;
+    }
+    .brand-logo {
+      width: 30px; height: 30px; border-radius: 22%;
+      box-shadow: 0 2px 8px rgba(0,0,0,.35), 0 0 0 1px rgba(255,255,255,.15);
+      display: block; flex-shrink: 0; transition: transform .25s;
+    }
+    .brand:hover .brand-logo { transform: scale(1.06); }
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+    .lang-switch {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.07); border: 1px solid var(--line);
+      color: #d2d5dc; padding: 7px 13px; border-radius: 999px;
+      cursor: pointer; font-size: .82rem; font-weight: 600;
+      transition: all .2s;
+    }
+    .lang-switch:hover {
+      background: rgba(255,255,255,.14); color: #fff;
+      border-color: rgba(255,255,255,.3); transform: translateY(-1px);
+    }
+    .back-home {
+      font-size: .88rem; color: #a5a9b3; padding: 8px 14px;
+      border: 1px solid var(--line); border-radius: 999px;
+      background: rgba(255,255,255,.05);
+    }
+    .back-home:hover { background: rgba(255,255,255,.1); text-decoration: none; }
+    main { padding: 50px 0 100px; }
+    .badge {
+      display: inline-block; padding: 6px 12px; border-radius: 999px;
+      background: rgba(107,140,255,.15); color: var(--blue-2);
+      font-size: .78rem; font-weight: 600; letter-spacing: .06em;
+      text-transform: uppercase; margin-bottom: 18px;
+    }
+    h1 { font-size: clamp(2.2rem, 4vw, 3.2rem); line-height: 1.15; margin-bottom: 14px; font-weight: 750; letter-spacing: -.05em; }
+    .date { color: var(--muted); font-size: .88rem; margin-bottom: 40px; }
+    .highlight-card {
+      background: var(--ink-2); border: 1px solid rgba(107,140,255,.35);
+      border-radius: var(--radius); padding: 26px 30px; margin-bottom: 40px;
+      position: relative; overflow: hidden;
+    }
+    .highlight-card:before {
+      content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+      background: var(--blue);
+    }
+    .highlight-card h3 { font-size: 1.15rem; margin-bottom: 8px; color: #fff; }
+    .highlight-card p { font-size: .95rem; color: #bcc0c9; margin: 0; }
+    section { margin-bottom: 44px; }
+    h2 { font-size: 1.45rem; margin-bottom: 16px; color: #fff; font-weight: 700; letter-spacing: -.03em; border-bottom: 1px solid rgba(255,255,255,.08); padding-bottom: 8px; }
+    p { color: #b2b6bf; margin-bottom: 14px; font-size: .98rem; }
+    ul { margin: 12px 0 20px 22px; color: #b2b6bf; font-size: .98rem; }
+    li { margin-bottom: 8px; }
+    strong { color: #fff; font-weight: 600; }
+    .footer {
+      border-top: 1px solid var(--line); padding: 40px 0; font-size: .82rem;
+      color: var(--muted); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+    }
+    .footer-links { display: flex; gap: 20px; }
+  </style>
+  <script src="assets/i18n.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="index.html"><img class="brand-logo" src="assets/app-logo.png" alt="FramerSnap Logo" />FramerSnap</a>
+      <div class="header-actions">
+        <button class="lang-switch" id="lang-toggle" onclick="window.FramoI18n.toggle()" aria-label="Switch Language">
+          🌐 <span>English</span>
+        </button>
+        <a class="back-home" href="index.html" data-i18n="back_home">← 返回官网首页</a>
+      </div>
+    </header>
+
+    <main>
+      <span class="badge" data-i18n="priv_badge">Privacy Policy / 隐私政策</span>
+      <h1 data-i18n="priv_h1">守护您的摄影隐私与资产安全</h1>
+      <div class="date" data-i18n="priv_date">最近更新生效日期：2026 年 9 月 20 日</div>
+
+      <div class="highlight-card">
+        <h3 data-i18n="priv_card_h3">零数据上传承诺 (Zero Data Collection)</h3>
+        <p data-i18n-html="priv_card_p"><strong>FramerSnap 是一款纯本地、离线优先的 macOS 原生工具。</strong> 我们不收集、不存储、不上传您的任何照片、文件名、EXIF 拍摄参数或设备信息。所有浏览、排版、压缩与格式转换 100% 在您的 Mac 芯片与本地内存中完成。</p>
+      </div>
+
+      <section>
+        <h2 data-i18n="priv_s1_h2">1. 我们收集的信息 (Information We Collect)</h2>
+        <p data-i18n-html="priv_s1_p"><strong>简而言之：我们不收集任何可识别个人身份的数据。</strong></p>
+        <ul>
+          <li data-i18n-html="priv_s1_li1"><strong>无云端服务器</strong>：FramerSnap 没有远程服务器或后端数据库，无法接收您的照片或操作记录。</li>
+          <li data-i18n-html="priv_s1_li2"><strong>无第三方追踪或广告 SDK</strong>：应用内零集成 Google Analytics、Firebase、Facebook SDK 或任何数据埋点框架。</li>
+          <li data-i18n-html="priv_s1_li3"><strong>无数据统计上传</strong>：应用不会后台上传崩溃日志或使用频率，真正做到开箱即用的离线安全。</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 data-i18n="priv_s2_h2">2. 照片与文件访问权限 (Photo & File Access)</h2>
+        <p data-i18n-html="priv_s2_p">FramerSnap 完全遵循 Apple 官方强制的 <strong>App Sandbox（应用沙盒机制）</strong>，严格保障操作系统与文件系统的隔离防护：</p>
+        <ul>
+          <li data-i18n-html="priv_s2_li1"><strong>用户意图驱动</strong>：应用仅在您双击打开图片、将图片拖拽进窗口或主动在访达中点选文件夹时，才由 macOS 系统授权访问当前特定目录。</li>
+          <li data-i18n-html="priv_s2_li2"><strong>局部安全书签 (Security-Scoped Bookmarks)</strong>：若您在设置中指定了“精选移入目标目录”，系统仅在本地持久化沙盒范围书签，绝不越权访问您的其他私人文件夹。</li>
+          <li data-i18n-html="priv_s2_li3"><strong>原文件防篡改保护</strong>：除您明确执行格式转换另存或压缩覆盖原图外，FramerSnap 默认对原片采用只读安全流。</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 data-i18n="priv_s3_h2">3. EXIF 与地理位置信息 (EXIF & Location Data)</h2>
+        <p data-i18n="priv_s3_p">数码照片中常包含快门、光圈、ISO、镜头型号以及 GPS 地理坐标等隐私数据：</p>
+        <ul>
+          <li data-i18n-html="priv_s3_li1">FramerSnap 仅在本地通过系统底层 <code>ImageIO</code> 框架读取这些信息用于 UI 渲染与相框水印排版展示。</li>
+          <li data-i18n-html="priv_s3_li2">这些元数据绝不会被传出您的设备。在导出相框时，您可以自主勾选或取消勾选拍摄参数的展示。</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 data-i18n="priv_s4_h2">4. 应用内购买与商业化隐私 (In-App Purchases / StoreKit 2)</h2>
+        <p data-i18n-html="priv_s4_p">FramerSnap Pro 商业化体系采用 Apple 官方原生 <strong>StoreKit 2</strong> 技术构建：</p>
+        <ul>
+          <li data-i18n-html="priv_s4_li1">所有付费交易（年度连续订阅与终身买断）均由 Apple App Store 统一切实执行。</li>
+          <li data-i18n-html="priv_s4_li2">我们无法访问、收集或记录您的支付密码、信用卡卡号或财务账单信息。</li>
+          <li data-i18n-html="priv_s4_li3">本地通过 Apple 签名的 JWS 凭证加密验证您的 Pro 权益，全程无第三方支付中间商。</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 data-i18n="priv_s5_h2">5. 儿童隐私 (Children's Privacy)</h2>
+        <p data-i18n="priv_s5_p">由于我们的应用不收集任何个人数据，因此 FramerSnap 完全适用于所有年龄段的用户，不包含任何有害内容或针对儿童的数据画像。</p>
+      </section>
+
+      <section>
+        <h2 data-i18n="priv_s6_h2">6. 政策变更与技术支持联系 (Contact & Support)</h2>
+        <p data-i18n="priv_s6_p">如果后续因法律合规或技术升级需要对隐私政策进行更新，我们将在本页面予以公告，并在应用更新日志中显著提示。</p>
+        <p data-i18n="priv_s6_contact">如果您对本隐私政策有任何疑问、建议或合规咨询，请随时与我们取得联系：</p>
+        <ul>
+          <li data-i18n-html="priv_s6_li1">技术支持与隐私专员邮箱：<a href="mailto:jentle_vt@163.com"><strong>jentle_vt@163.com</strong></a></li>
+          <li data-i18n-html="priv_s6_li2">官方网站：<a href="https://framersnap.com">https://framersnap.com</a></li>
+          <li data-i18n="priv_s6_li3">响应时效：通常在 24~48 小时内为您回复解答。</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div data-i18n="footer_rights">© 2026 FramerSnap. 保留所有权利。</div>
+      <div class="footer-links">
+        <a href="index.html" data-i18n="nav_home">官网首页</a>
+        <a href="terms.html" data-i18n="footer_terms">服务条款 (EULA)</a>
+        <a href="support.html" data-i18n="footer_support">技术支持与 FAQ</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

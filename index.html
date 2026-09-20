@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n="doc_title">FramerSnap — 从看见，到选定，一气呵成 | macOS 原生摄影看图与排版暗房</title>
+  <meta name="description" data-i18n-content="doc_desc" content="专为 Mac 设计的轻快照片工作流。打开即看整个文件夹，沉浸式挑图、智能无损压缩、批量格式转换与大师艺术相框排版。100% 本地离线运行，严密守护摄影隐私。" />
+  <meta name="keywords" content="FramerSnap, Mac看图, 相机RAW, 艺术相框, 照片排版, EXIF, 图片压缩, HEIC转换, AirDrop, macOS" />
+  <link rel="canonical" href="https://framersnap.com/" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+  <link rel="shortcut icon" href="assets/favicon.ico" />
+
+  <!-- Open Graph & Social Cards -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="FramerSnap — 从看见，到选定，一气呵成" />
+  <meta property="og:description" content="专为 Mac 打造的轻快照片工作流：极速看图、沉浸挑图、智能无损压缩与大师相框排版。纯本地离线安全。" />
+  <meta property="og:image" content="assets/og-image.png" />
+  <meta property="og:url" content="https://framersnap.com/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="FramerSnap — macOS 原生摄影看图与排版暗房" />
+  <meta name="twitter:description" content="从看见，到选定，一气呵成。100% 本地离线运行，严密守护摄影资产与隐私。" />
+  <meta name="twitter:image" content="assets/og-image.png" />
+
+  <style>
+    :root {
+      --ink:#090a0d; --ink-2:#111318; --paper:#f5f3ed; --white:#fff;
+      --muted:#92969f; --muted-dark:#5c6069; --blue:#6b8cff; --blue-2:#9bacff;
+      --line:rgba(255,255,255,.13); --line-dark:rgba(9,10,13,.12);
+      --ease:cubic-bezier(.2,.78,.2,1); --radius:28px;
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth} section{scroll-margin-top:84px} body{margin:0;background:var(--ink);color:var(--white);font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Hiragino Sans GB",sans-serif;letter-spacing:-.025em;overflow-x:hidden} body.no-scroll{overflow:hidden}
+    a{color:inherit;text-decoration:none} button{font:inherit}.wrap{width:min(1240px,calc(100% - 56px));margin:auto}
+    .noise{position:fixed;inset:0;pointer-events:none;z-index:20;opacity:.055;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
+    .nav-shell{position:fixed;top:0;left:0;right:0;z-index:15;transition:.35s var(--ease)}.nav-shell.scrolled{background:rgba(9,10,13,.78);backdrop-filter:blur(20px);border-bottom:1px solid var(--line)}
+    nav{height:76px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:11px;font-weight:760;letter-spacing:-.055em}.brand-logo{width:30px;height:30px;border-radius:22%;box-shadow:0 2px 8px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.15);display:block;flex-shrink:0;transition:transform .25s var(--ease)}.brand:hover .brand-logo{transform:scale(1.06)}
+    .nav-links{display:flex;align-items:center;gap:20px;font-size:.88rem;color:#b8bbc2}.nav-links a{transition:color .2s}.nav-links a:hover{color:#fff}.nav-cta{border:1px solid rgba(255,255,255,.25);padding:10px 18px;border-radius:999px;color:#fff!important;background:rgba(255,255,255,.07)}
+    
+    .lang-switch{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.07);border:1px solid var(--line);color:#d2d5dc;padding:7px 13px;border-radius:999px;cursor:pointer;font-size:.82rem;font-weight:600;transition:all .2s var(--ease)}
+    .lang-switch:hover{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.3);transform:translateY(-1px)}
+    
+    .hero{padding:138px 0 76px;position:relative;overflow:hidden}.hero:before{content:"";position:absolute;width:900px;height:700px;top:-300px;left:50%;transform:translateX(-50%);background:radial-gradient(circle,rgba(82,111,255,.25),transparent 68%);filter:blur(20px)}
+    .hero-copy{text-align:center;position:relative;z-index:1}.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:#b9bfcd}.eyebrow i{width:28px;height:1px;background:var(--blue)}
+    h1{font-size:clamp(3.7rem,8.4vw,8rem);line-height:.91;letter-spacing:-.09em;margin:26px auto 28px;max-width:1050px;font-weight:730}.gradient-word{color:transparent;background:linear-gradient(105deg,#fff 10%,#8da5ff 65%,#b8c5ff);background-clip:text;-webkit-background-clip:text}
+    .hero-lede{font-size:clamp(1.05rem,1.6vw,1.3rem);line-height:1.65;color:#aeb1b9;max-width:650px;margin:0 auto 30px}.hero-lede strong{color:#fff;font-weight:550}.actions{display:flex;justify-content:center;align-items:center;gap:16px;flex-wrap:wrap}.button{display:inline-flex;align-items:center;justify-content:center;gap:9px;background:#f5f3ed;color:#0b0c0f;border-radius:999px;padding:14px 22px;font-size:.91rem;font-weight:720;transition:transform .25s var(--ease),box-shadow .25s}.button:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(255,255,255,.12)}.button.ghost{color:#d7d9df;background:transparent;border:1px solid var(--line)}.button svg{width:16px}
+    .appstore-badge{display:inline-flex;align-items:center;transition:transform .25s var(--ease),filter .25s;filter:drop-shadow(0 4px 14px rgba(0,0,0,.5))}.appstore-badge:hover{transform:translateY(-2px);filter:drop-shadow(0 8px 24px rgba(107,140,255,.25))}
+    .system-note{font-size:.74rem;color:#747984;margin-top:14px;letter-spacing:.01em}
+    .stage{width:min(1320px,calc(100% - 32px));margin:56px auto 0;position:relative;z-index:1}.stage:before{content:"";position:absolute;inset:15% 8% -6%;background:radial-gradient(ellipse,rgba(107,140,255,.34),transparent 67%);filter:blur(45px)}
+    .stage-frame{position:relative;border:1px solid rgba(255,255,255,.18);border-radius:24px;padding:9px;background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.035));box-shadow:0 55px 130px rgba(0,0,0,.65);transform:perspective(1800px) rotateX(2deg);transform-origin:center bottom}.stage-window{overflow:hidden;border-radius:17px;background:#17191e;aspect-ratio:1.508;position:relative}.stage-window img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .25s,transform .9s var(--ease)}.stage-window.switching img{opacity:.25;transform:scale(.985)}
+    .stage-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:9px}.stage-tab{border:1px solid transparent;color:#8b8f98;background:transparent;border-radius:13px;padding:14px 12px;cursor:pointer;text-align:left;transition:.25s var(--ease)}.stage-tab:hover{color:#fff;background:rgba(255,255,255,.045)}.stage-tab.active{color:#fff;border-color:rgba(255,255,255,.14);background:rgba(255,255,255,.08)}.stage-tab span{font-size:.68rem;color:#69707f;display:block;margin-bottom:5px;letter-spacing:.08em}.stage-tab strong{font-size:.9rem;font-weight:600}.float-note{position:absolute;right:-20px;top:22%;max-width:248px;padding:18px 19px;background:rgba(19,21,27,.85);border:1px solid var(--line);backdrop-filter:blur(18px);border-radius:17px;box-shadow:0 18px 50px rgba(0,0,0,.34);transition:.35s var(--ease)}.float-note b{display:block;font-size:.92rem;margin-bottom:6px}.float-note p{margin:0;color:#999da7;font-size:.8rem;line-height:1.55}
+    .problem{padding:170px 0;background:var(--paper);color:var(--ink);position:relative}.problem-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:100px;align-items:start}.section-label{font-size:.73rem;letter-spacing:.12em;text-transform:uppercase;color:#777b84;display:flex;align-items:center;gap:10px}.section-label:before{content:"";width:24px;height:1px;background:currentColor}.problem h2{font-size:clamp(2.9rem,5.4vw,5.7rem);line-height:1.02;letter-spacing:-.075em;margin:0;max-width:820px}.problem h2 em{font-family:"Songti SC","STSong",serif;font-weight:400;color:#6e7077}.problem-copy{grid-column:2;display:grid;grid-template-columns:repeat(2,1fr);gap:34px;margin-top:40px}.problem-copy p{font-size:1.08rem;line-height:1.75;color:#5e6169;margin:0}.problem-copy strong{color:var(--ink);font-weight:650}
+    .flow{background:var(--paper);color:var(--ink);padding:0 0 160px}.flow-shell{background:#0c0d11;color:#fff;border-radius:38px;overflow:hidden;position:relative}.flow-shell:before{content:"";position:absolute;width:600px;height:600px;right:-150px;top:-250px;background:radial-gradient(circle,rgba(107,140,255,.24),transparent 68%)}.flow-head{display:flex;justify-content:space-between;gap:50px;padding:76px 76px 50px;position:relative}.flow-head h2{font-size:clamp(2.8rem,5vw,5.1rem);line-height:1;letter-spacing:-.07em;margin:0;max-width:750px}.flow-head p{max-width:330px;color:#a3a6ae;line-height:1.65;margin:10px 0 0}.flow-steps{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);position:relative}.flow-step{padding:38px 34px 44px;border-right:1px solid var(--line)}.flow-step:last-child{border:0}.flow-step .n{display:flex;align-items:center;justify-content:space-between;color:#707681;font-size:.72rem;letter-spacing:.08em}.flow-step .n i{width:7px;height:7px;border-radius:50%;background:#3d424b}.flow-step:first-child .n i{background:var(--blue);box-shadow:0 0 0 6px rgba(107,140,255,.13)}.flow-step h3{font-size:1.22rem;margin:48px 0 12px}.flow-step p{font-size:.9rem;line-height:1.65;color:#92969f;margin:0}
+    .stories{background:var(--ink);padding:155px 0}.stories-head{display:flex;align-items:end;justify-content:space-between;margin-bottom:86px}.stories-head h2{font-size:clamp(3rem,6vw,6.4rem);line-height:.93;letter-spacing:-.08em;margin:18px 0 0}.stories-head p{color:#9b9fa8;max-width:365px;line-height:1.7;margin:0}
+    .story{display:grid;grid-template-columns:.78fr 1.22fr;gap:70px;align-items:center;margin-bottom:150px}.story:last-child{margin-bottom:0}.story.reverse{grid-template-columns:1.22fr .78fr}.story.reverse .story-copy{order:2}.story-copy .index{color:var(--blue-2);font-size:.74rem;letter-spacing:.12em}.story-copy h3{font-size:clamp(2.4rem,4.4vw,4.7rem);line-height:1.02;letter-spacing:-.07em;margin:18px 0 24px}.story-copy p{font-size:1.03rem;line-height:1.75;color:#9b9fa8;margin:0;max-width:470px}.story-copy .detail{display:flex;gap:9px;flex-wrap:wrap;margin-top:28px}.pill{border:1px solid var(--line);border-radius:999px;padding:8px 11px;color:#b5b8c0;font-size:.74rem;letter-spacing:.01em}
+    .visual-card{border-radius:26px;padding:11px;background:linear-gradient(145deg,#252832,#121318);box-shadow:0 40px 90px rgba(0,0,0,.35);position:relative;overflow:hidden}.visual-card:after{content:"";position:absolute;inset:0;border:1px solid rgba(255,255,255,.13);border-radius:26px;pointer-events:none}.visual-card img{width:100%;display:block;border-radius:17px;transition:transform .7s var(--ease);cursor:zoom-in}.visual-card:hover img{transform:scale(1.018)}.visual-card .caption{position:absolute;left:28px;bottom:28px;padding:8px 11px;border-radius:999px;background:rgba(9,10,13,.72);backdrop-filter:blur(12px);font-size:.72rem;color:#d7d9df;border:1px solid rgba(255,255,255,.14);pointer-events:none}
+    .proof{padding:150px 0;background:#0e1015;color:#fff;border-top:1px solid var(--line)}.proof-head{display:grid;grid-template-columns:1fr .55fr;gap:80px;align-items:end;margin-bottom:72px}.proof-head h2{font-size:clamp(3rem,6vw,6.2rem);line-height:.95;letter-spacing:-.08em;margin:18px 0 0}.proof-head p{color:#989ca6;line-height:1.7;margin:0}.proof-count{display:inline-flex;margin-top:24px;border:1px solid var(--line);border-radius:999px;padding:8px 11px;color:#bec1c8;font-size:.72rem;letter-spacing:.08em}.proof-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:22px}.proof-card{grid-column:span 6;background:#15171d;border:1px solid rgba(255,255,255,.1);border-radius:26px;padding:26px;overflow:hidden}.proof-card.wide{grid-column:span 12}.proof-card-head{display:flex;justify-content:space-between;gap:30px;align-items:start;margin-bottom:24px}.proof-card-head span{font-size:.7rem;letter-spacing:.12em;color:#7f8591}.proof-card h3{font-size:1.35rem;margin:6px 0 0;letter-spacing:-.04em}.proof-card p{font-size:.86rem;line-height:1.6;color:#8f939d;margin:5px 0 0;max-width:420px}.proof-visuals{display:grid;gap:10px}.proof-visuals.two{grid-template-columns:repeat(2,1fr)}.proof-visuals.three{grid-template-columns:1fr 1fr}.proof-visuals.three figure:first-child{grid-row:span 2}.proof-visuals figure{margin:0;padding:6px;background:#0b0c10;border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;position:relative}.proof-visuals img{width:100%;height:100%;object-fit:cover;display:block;border-radius:11px;cursor:zoom-in;transition:transform .65s var(--ease)}.proof-visuals figure:hover img{transform:scale(1.015)}.proof-visuals figcaption{position:absolute;left:16px;bottom:16px;padding:7px 10px;border-radius:999px;background:rgba(7,8,11,.72);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.13);font-size:.68rem;color:#d6d8dd}.proof-card:not(.wide) .proof-visuals figure{aspect-ratio:1.508}.proof-card:not(.wide) .proof-visuals img{object-fit:cover}
+    .toolkit{padding:145px 0;background:var(--paper);color:var(--ink)}.toolkit-head{text-align:center;max-width:820px;margin:0 auto 70px}.toolkit-head h2{font-size:clamp(3rem,5.5vw,5.8rem);line-height:.97;letter-spacing:-.08em;margin:18px 0 23px}.toolkit-head p{color:#666a72;font-size:1.02rem;line-height:1.7;margin:0}.tool-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.tool{background:#e9e7e1;border:1px solid rgba(9,10,13,.08);border-radius:24px;padding:30px;min-height:260px;position:relative;overflow:hidden;transition:transform .3s var(--ease),background .3s}.tool:hover{transform:translateY(-4px);background:#edebe6}.tool:nth-child(1){grid-column:span 7}.tool:nth-child(2){grid-column:span 5}.tool:nth-child(3),.tool:nth-child(4),.tool:nth-child(5){grid-column:span 4}.tool .tool-icon{width:42px;height:42px;border-radius:13px;background:#111318;color:#fff;display:grid;place-items:center;font-size:1rem}.tool h3{font-size:1.28rem;margin:50px 0 10px}.tool p{font-size:.9rem;line-height:1.6;color:#696c73;margin:0;max-width:380px}.tool .arrow{position:absolute;right:26px;top:26px;font-size:1.2rem;color:#a0a3aa}.tool:nth-child(1){background:#dfe5ff}.tool:nth-child(1) .tool-icon{background:#536fdf}
+
+    /* Pricing Section */
+    .pricing{padding:140px 0;background:#0c0d12;color:#fff;border-top:1px solid var(--line);position:relative}
+    .pricing:before{content:"";position:absolute;width:650px;height:450px;top:0;left:50%;transform:translateX(-50%);background:radial-gradient(circle,rgba(107,140,255,.18),transparent 70%);filter:blur(30px)}
+    .pricing-head{text-align:center;max-width:820px;margin:0 auto 60px;position:relative;z-index:1}
+    .pricing-head h2{font-size:clamp(2.8rem,5.5vw,5.2rem);line-height:1;letter-spacing:-.08em;margin:18px 0 16px}
+    .pricing-head p{color:#9da0a9;font-size:1.05rem;line-height:1.6;margin:0}
+    .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch;margin-bottom:36px;position:relative;z-index:1}
+    @media (max-width:960px){.pricing-grid{grid-template-columns:1fr}}
+    .pricing-card{background:#14161d;border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:36px 28px;display:flex;flex-direction:column;justify-content:space-between;position:relative;transition:transform .3s var(--ease),border-color .3s}
+    .pricing-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.25)}
+    .pricing-card.featured{background:linear-gradient(160deg,#1c2130,#13151c);border-color:rgba(107,140,255,.5);box-shadow:0 20px 60px rgba(107,140,255,.12)}
+    .pricing-badge{position:absolute;top:-13px;right:24px;background:var(--blue);color:#fff;font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:999px;letter-spacing:.05em;text-transform:uppercase}
+    .pricing-card h3{font-size:1.28rem;margin:0 0 6px;color:#fff}
+    .price{font-size:2.8rem;font-weight:750;letter-spacing:-.06em;margin:16px 0 6px;display:flex;align-items:baseline;gap:4px;color:#fff}
+    .price span{font-size:.92rem;color:var(--muted);font-weight:400}
+    .price-desc{color:#8f939e;font-size:.88rem;margin-bottom:24px;min-height:42px;line-height:1.5}
+    .pricing-features{list-style:none;padding:0;margin:0 0 32px;border-top:1px solid var(--line);padding-top:20px;flex-grow:1}
+    .pricing-features li{font-size:.88rem;color:#b7bac2;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px;line-height:1.5}
+    .pricing-features li svg{width:16px;height:16px;color:var(--blue);flex-shrink:0;margin-top:2px}
+    .pricing-card .button{width:100%;text-align:center}
+    .pricing-note{text-align:center;color:#757a85;font-size:.8rem;line-height:1.6;max-width:700px;margin:auto;position:relative;z-index:1}
+
+    .quote{background:var(--paper);color:var(--ink);padding:0 0 150px}.quote blockquote{margin:0;border-top:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark);padding:90px 0;text-align:center;font-family:"Songti SC","STSong",serif;font-size:clamp(2.2rem,4.2vw,4.4rem);line-height:1.25;letter-spacing:-.05em}.quote blockquote span{color:#73767d}
+    .closing{min-height:82vh;display:grid;place-items:center;text-align:center;position:relative;overflow:hidden}.closing:before{content:"";position:absolute;width:900px;height:900px;border-radius:50%;background:radial-gradient(circle,rgba(93,124,255,.32),transparent 63%);bottom:-600px;left:50%;transform:translateX(-50%)}.closing .inner{position:relative}.closing h2{font-size:clamp(3.5rem,8vw,8.5rem);line-height:.91;letter-spacing:-.09em;margin:0 auto 30px;max-width:1050px}.closing p{color:#9da0a9;font-size:1.08rem;margin:0 0 30px}
+    
+    .footer{padding:50px 0 40px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;color:#70747e;font-size:.8rem;letter-spacing:0;flex-wrap:wrap;gap:20px}
+    .footer-links{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+    .footer-links a{color:#8f939e;transition:color .2s}
+    .footer-links a:hover{color:#fff}
+    
+    .lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(3,4,6,.92);backdrop-filter:blur(16px);z-index:50;padding:32px}.lightbox.open{display:flex}.lightbox img{max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;box-shadow:0 40px 120px #000}.lightbox button{position:absolute;right:24px;top:22px;width:44px;height:44px;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(255,255,255,.08);color:#fff;font-size:24px;cursor:pointer}.reveal{opacity:0;transform:translateY(36px);transition:opacity .8s var(--ease),transform .8s var(--ease)}.reveal.in{opacity:1;transform:none}
+    @media(max-width:900px){.wrap{width:min(100% - 36px,1240px)}.hero{padding-top:125px}.stage{width:calc(100% - 20px)}.stage-tabs{grid-template-columns:repeat(2,1fr)}.float-note{right:12px;top:18px}.problem-grid,.story,.story.reverse{grid-template-columns:1fr;gap:44px}.problem-copy{grid-column:1}.story.reverse .story-copy{order:0}.flow-head{padding:58px 40px 40px}.flow-steps{grid-template-columns:repeat(2,1fr)}.flow-step:nth-child(2){border-right:0}.flow-step:nth-child(-n+2){border-bottom:1px solid var(--line)}.proof-head{grid-template-columns:1fr;gap:26px}.proof-card{grid-column:span 12}.tool:nth-child(n){grid-column:span 6}}
+    @media(max-width:640px){.wrap{width:min(100% - 28px,1240px)}.nav-links a:not(.nav-cta){display:none}nav{height:68px}.hero{padding:108px 0 64px}h1{font-size:2.9rem;line-height:.96;letter-spacing:-.075em}.hero-lede{font-size:1rem}.stage{margin-top:40px}.stage-frame{padding:5px;border-radius:15px;transform:none}.stage-window{border-radius:10px}.stage-tabs{display:flex;overflow-x:auto;scrollbar-width:none}.stage-tab{min-width:120px;padding:10px}.float-note{display:none}.problem{padding:100px 0}.problem-grid{gap:30px}.problem-copy{grid-template-columns:1fr;gap:18px;margin-top:10px}.flow{padding-bottom:100px}.flow-shell{border-radius:24px}.flow-head{display:block;padding:42px 24px 32px}.flow-head p{margin-top:24px}.flow-steps{grid-template-columns:1fr}.flow-step{border-right:0;border-bottom:1px solid var(--line)!important;padding:28px 24px}.flow-step:last-child{border-bottom:0!important}.flow-step h3{margin-top:25px}.stories{padding:100px 0}.stories-head{display:block;margin-bottom:60px}.stories-head p{margin-top:26px}.story{gap:30px;margin-bottom:100px}.story-copy h3{margin-top:14px}.visual-card{border-radius:17px;padding:6px}.visual-card:after{border-radius:17px}.visual-card img{border-radius:11px}.visual-card .caption{display:none}.proof{padding:100px 0}.proof-head{margin-bottom:42px}.proof-card,.proof-card.wide{grid-column:span 12;padding:18px;border-radius:19px}.proof-card-head{display:block}.proof-card-head>span{display:block;margin-bottom:10px}.proof-visuals.two,.proof-visuals.three{grid-template-columns:1fr}.proof-visuals.three figure:first-child{grid-row:auto}.proof-visuals figcaption{display:none}.toolkit{padding:100px 0}.toolkit-head{text-align:left;margin-bottom:45px}.toolkit-head .section-label{justify-content:flex-start!important}.tool:nth-child(n){grid-column:span 12;min-height:230px}.quote{padding-bottom:100px}.quote blockquote{padding:65px 0;text-align:left}.closing{min-height:70vh}.closing h2{font-size:3.3rem}.footer{flex-direction:column;align-items:flex-start;gap:14px}.lightbox{padding:10px}.lightbox button{right:12px;top:12px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}.reveal{opacity:1;transform:none}}
+  </style>
+  <script src="assets/i18n.js"></script>
+</head>
+<body>
+  <div class="noise"></div>
+  <header class="nav-shell">
+    <nav class="wrap">
+      <a class="brand" href="#top">
+        <img class="brand-logo" src="assets/app-logo.png" alt="FramerSnap Logo" />
+        <span>FramerSnap</span>
+      </a>
+      <div class="nav-links">
+        <a href="#flow" data-i18n="nav_flow">工作流</a>
+        <a href="#details" data-i18n="nav_details">核心能力</a>
+        <a href="#gallery" data-i18n="nav_gallery">真实画廊</a>
+        <a href="#pricing" data-i18n="nav_pricing">方案定价</a>
+        <a href="support.html" data-i18n="nav_support">技术支持</a>
+        <button class="lang-switch" id="lang-toggle" onclick="window.FramoI18n.toggle()" aria-label="Switch Language">
+          🌐 <span>English</span>
+        </button>
+        <a href="#download" class="nav-cta" data-i18n="nav_download">下载 Mac 版</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-copy">
+        <div class="eyebrow"><i></i><span data-i18n="hero_eyebrow">不止是看图软件</span></div>
+        <h1 data-i18n-html="hero_title">从看见，到选定。<br><span class="gradient-word">一气呵成。</span></h1>
+        <p class="hero-lede" data-i18n-html="hero_lede">打开一张照片，即刻浏览整个文件夹。<strong>看图、挑图、轻处理、排版交付</strong>，不再反复跳转 Finder、预览与笨重修图工具。</p>
+        <div class="actions">
+          <!-- Mac App Store Official Badge -->
+          <a class="appstore-badge" href="https://apps.apple.com/app/framersnap/id6742567890" target="_blank" rel="noopener" aria-label="Download on the Mac App Store">
+            <svg width="170" height="52" viewBox="0 0 170 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="170" height="52" rx="10" fill="#000" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+              <path d="M35.6 26.2c0-3.3 2.7-4.9 2.8-5-1.5-2.2-4-2.5-4.8-2.6-2-.2-4 1.2-5.1 1.2-1 0-2.6-1.2-4.3-1.2-2.2 0-4.3 1.3-5.4 3.3-2.3 4-0.6 9.9 1.6 13.2 1.1 1.6 2.4 3.4 4.1 3.3 1.7-.1 2.3-1.1 4.3-1.1 2 0 2.5 1.1 4.3 1.1 1.8 0 3-1.6 4.1-3.2 1.3-1.9 1.8-3.7 1.8-3.8-0.1 0-3.5-1.3-3.5-5.2zM31.8 16.5c0.9-1.1 1.5-2.6 1.3-4.1-1.3 0.1-2.9 0.9-3.8 2-0.8 0.9-1.5 2.5-1.3 4 1.5 0.1 2.9-0.8 3.8-1.9z" fill="#FFF"/>
+              <text x="50" y="20" fill="#A6A6A6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="500" letter-spacing="0.2">Download on the</text>
+              <text x="50" y="36" fill="#FFF" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="16" font-weight="600" letter-spacing="-0.3">Mac App Store</text>
+            </svg>
+          </a>
+          <a class="button ghost" href="#flow" data-i18n="hero_explore">看看它如何工作 ↓</a>
+        </div>
+        <div class="system-note" data-i18n="hero_sysnote">原生适配 Apple Silicon & Intel · macOS 14.0 及以上 · 纯本地隐私安全</div>
+      </div>
+
+      <div class="stage" aria-label="FramerSnap 核心工作流演示">
+        <div class="stage-frame">
+          <div class="stage-window"><img id="stage-image" src="assets/viewer.webp" alt="FramerSnap 工作界面" /></div>
+          <div class="stage-tabs" role="tablist">
+            <button class="stage-tab active" role="tab" aria-selected="true" data-image="assets/viewer.webp" data-title-key="tab1_title" data-note-key="tab1_note"><span data-i18n="tab1_badge">01 / OPEN</span><strong data-i18n="tab1_name">打开即浏览</strong></button>
+            <button class="stage-tab" role="tab" aria-selected="false" data-image="assets/pick-menu.webp" data-title-key="tab2_title" data-note-key="tab2_note"><span data-i18n="tab2_badge">02 / PICK</span><strong data-i18n="tab2_name">边看边挑</strong></button>
+            <button class="stage-tab" role="tab" aria-selected="false" data-image="assets/crop-ratio.webp" data-title-key="tab3_title" data-note-key="tab3_note"><span data-i18n="tab3_badge">03 / REFINE</span><strong data-i18n="tab3_name">快速构图</strong></button>
+            <button class="stage-tab" role="tab" aria-selected="false" data-image="assets/frame-1.webp" data-title-key="tab4_title" data-note-key="tab4_note"><span data-i18n="tab4_badge">04 / FRAME</span><strong data-i18n="tab4_name">大师相框</strong></button>
+            <button class="stage-tab" role="tab" aria-selected="false" data-image="assets/export.webp" data-title-key="tab5_title" data-note-key="tab5_note"><span data-i18n="tab5_badge">05 / DELIVER</span><strong data-i18n="tab5_name">批量交付</strong></button>
+          </div>
+          <aside class="float-note" aria-live="polite"><b data-i18n="tab1_title">一张打开，整组就位</b><p data-i18n="tab1_note">不必先导入图库；点开任意照片，同文件夹影像自动出现在底部胶片带。</p></aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="problem">
+      <div class="wrap problem-grid reveal">
+        <div class="section-label" data-i18n="prob_label">Why FramerSnap</div>
+        <h2 data-i18n-html="prob_title">拍完照片后，真正拖慢你的，往往不是创作。<em>是那些零碎的小动作。</em></h2>
+        <div class="problem-copy">
+          <p data-i18n-html="prob_p1">在 Finder 找文件，用预览逐张翻，再打开另一个工具看参数、裁切、转换格式——<strong>每一步都很简单，连起来却不断打断判断。</strong></p>
+          <p data-i18n-html="prob_p2">FramerSnap 把这些高频动作放回一条连续的视觉路径。你只需要专注于一件事：<strong>哪一张，值得留下。</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="flow" id="flow">
+      <div class="wrap flow-shell reveal">
+        <div class="flow-head">
+          <h2 data-i18n-html="flow_h2">一条没有岔路的<br>照片工作流。</h2>
+          <p data-i18n="flow_p">从第一次看见，到最终发出，操作始终围绕当前这组照片展开。少切换一次，就多保留一点判断的连贯。</p>
+        </div>
+        <div class="flow-steps">
+          <article class="flow-step"><div class="n" data-i18n-html="flow1_n">01 / 看见<i></i></div><h3 data-i18n="flow1_h3">打开任意一张</h3><p data-i18n="flow1_p">自动读取同一文件夹。JPG、HEIC、WebP、PNG、TIFF、RAW 等常见格式直接预览。</p></article>
+          <article class="flow-step"><div class="n" data-i18n-html="flow2_n">02 / 判断<i></i></div><h3 data-i18n="flow2_h3">整组连贯浏览</h3><p data-i18n="flow2_p">胶片带、缩放与拍摄信息留在眼前，不再为了确认细节离开当前画面。</p></article>
+          <article class="flow-step"><div class="n" data-i18n-html="flow3_n">03 / 选定<i></i></div><h3 data-i18n="flow3_h3">边看边收进精选</h3><p data-i18n="flow3_p">单选、连选、跨图多选都顺手。喜欢的照片一键归拢，挑图不再变成文件管理。</p></article>
+          <article class="flow-step"><div class="n" data-i18n-html="flow4_n">04 / 发出<i></i></div><h3 data-i18n="flow4_h3">按需要完成交付</h3><p data-i18n="flow4_p">直接 AirDrop，或批量转换与压缩；需要展示时，再补上干净的艺术相框。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="stories" id="details">
+      <div class="wrap">
+        <div class="stories-head reveal">
+          <div><div class="section-label" data-i18n="story_label">The details</div><h2 data-i18n-html="story_h2">动作很轻，<br>判断很快。</h2></div>
+          <p data-i18n="story_desc">不是把专业软件缩小，而是把看图时真正需要的能力，放到最顺手的位置。</p>
+        </div>
+
+        <article class="story reveal">
+          <div class="story-copy">
+            <span class="index" data-i18n="story1_idx">01 / PICK</span>
+            <h3 data-i18n-html="story1_h3">不用退出画面，<br>就能完成挑片。</h3>
+            <p data-i18n="story1_p">底部胶片带不是装饰，而是整条工作流的主轴。Cmd 点选、Shift 连选，喜欢的照片直接移入精选；你的目光始终留在作品上。</p>
+            <div class="detail"><span class="pill" data-i18n="story1_t1">灵活多选</span><span class="pill" data-i18n="story1_t2">一键精选</span><span class="pill" data-i18n="story1_t3">快捷键支持</span></div>
+          </div>
+          <div class="visual-card"><img src="assets/select-2.webp" data-zoom alt="FramerSnap Selection" loading="lazy" /><span class="caption" data-i18n="zoom_caption">点击查看完整界面</span></div>
+        </article>
+
+        <article class="story reverse reveal">
+          <div class="story-copy">
+            <span class="index" data-i18n="story2_idx">02 / REFINE</span>
+            <h3 data-i18n-html="story2_h3">辅助判断，<br>而不是接管创作。</h3>
+            <p data-i18n="story2_p">标准比例、位置参考和完整 EXIF 信息随时展开。你可以快速确认构图与拍摄参数，再决定是否值得进入下一步。</p>
+            <div class="detail"><span class="pill" data-i18n="story2_t1">标准画幅</span><span class="pill" data-i18n="story2_t2">位置辅助</span><span class="pill" data-i18n="story2_t3">EXIF 信息</span></div>
+          </div>
+          <div class="visual-card"><img src="assets/crop.webp" data-zoom alt="FramerSnap Crop" loading="lazy" /><span class="caption" data-i18n="zoom_caption">点击查看完整界面</span></div>
+        </article>
+
+        <article class="story reveal">
+          <div class="story-copy">
+            <span class="index" data-i18n="story3_idx">03 / PRESENT</span>
+            <h3 data-i18n-html="story3_h3">让作品完成，<br>不只是导出。</h3>
+            <p data-i18n="story3_p">一键生成带有留白、阴影与拍摄参数的艺术相框。分享出去的不是一张裸露的文件，而是一幅已经准备好被观看的作品。</p>
+            <div class="detail"><span class="pill" data-i18n="story3_t1">艺术相框</span><span class="pill" data-i18n="story3_t2">相机与镜头参数</span><span class="pill" data-i18n="story3_t3">实时预览</span></div>
+          </div>
+          <div class="visual-card"><img src="assets/frame-1.webp" data-zoom alt="FramerSnap Frame" loading="lazy" /><span class="caption" data-i18n="zoom_caption">点击查看完整界面</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="proof" id="gallery">
+      <div class="wrap">
+        <div class="proof-head reveal">
+          <div>
+            <div class="section-label" data-i18n="gallery_label">Complete product tour</div>
+            <h2 data-i18n-html="gallery_h2">每一个功能，<br>都完整呈现。</h2>
+            <span class="proof-count" data-i18n="gallery_badge">12 SCREENS · 8 CAPABILITIES</span>
+          </div>
+          <p data-i18n="gallery_desc">这里不是概念示意，而是 FramerSnap 当前产品界面的完整切片。每张截图都可以点击放大，逐一查看真实操作与细节。</p>
+        </div>
+        <div class="proof-grid">
+          <article class="proof-card wide reveal">
+            <div class="proof-card-head"><div><span data-i18n="g1_badge">01 / BROWSE</span><h3 data-i18n="g1_h3">打开即浏览，常用格式直接展示</h3><p data-i18n="g1_p">从单张照片进入整组影像；沉浸式画面与底部胶片带始终保持同步。</p></div><span>2 SCREENS</span></div>
+            <div class="proof-visuals two">
+              <figure><img src="assets/viewer.webp" data-zoom alt="FramerSnap 浏览" loading="lazy" /><figcaption data-i18n="g1_cap1">沉浸浏览与胶片带</figcaption></figure>
+              <figure><img src="assets/viewer-2.webp" data-zoom alt="FramerSnap 常用格式" loading="lazy" /><figcaption data-i18n="g1_cap2">常用格式快速展示</figcaption></figure>
+            </div>
+          </article>
+
+          <article class="proof-card reveal">
+            <div class="proof-card-head"><div><span data-i18n="g2_badge">02 / INSPECT</span><h3 data-i18n="g2_h3">拍摄信息，随时展开</h3><p data-i18n="g2_p">文件属性与 EXIF 参数留在当前画面，确认细节不必切换应用。</p></div><span>1 SCREEN</span></div>
+            <div class="proof-visuals"><figure><img src="assets/info.webp" data-zoom alt="FramerSnap EXIF" loading="lazy" /><figcaption data-i18n="g2_cap">快速信息查看</figcaption></figure></div>
+          </article>
+
+          <article class="proof-card reveal">
+            <div class="proof-card-head"><div><span data-i18n="g3_badge">03 / COMPOSE</span><h3 data-i18n="g3_h3">标准比例辅助二次构图</h3><p data-i18n="g3_p">常用画幅比例直接覆盖在照片上，让构图判断更快落位。</p></div><span>1 SCREEN</span></div>
+            <div class="proof-visuals"><figure><img src="assets/crop.webp" data-zoom alt="FramerSnap 构图" loading="lazy" /><figcaption data-i18n="g3_cap">标准比例辅助</figcaption></figure></div>
+          </article>
+
+          <article class="proof-card reveal">
+            <div class="proof-card-head"><div><span data-i18n="g4_badge">04 / POSITION</span><h3 data-i18n="g4_h3">快速定位图片位置</h3><p data-i18n="g4_p">围绕当前照片完成定位与文件操作，不必回到 Finder 重新搜索。</p></div><span>1 SCREEN</span></div>
+            <div class="proof-visuals"><figure><img src="assets/crop-position.webp" data-zoom alt="FramerSnap 定位" loading="lazy" /><figcaption data-i18n="g4_cap">快速定位位置</figcaption></figure></div>
+          </article>
+
+          <article class="proof-card reveal">
+            <div class="proof-card-head"><div><span data-i18n="g5_badge">05 / SHARE</span><h3 data-i18n="g5_h3">多选之后，直接 AirDrop</h3><p data-i18n="g5_p">分享紧接在挑选之后，身边的人无需等待你重复导出与选择。</p></div><span>1 SCREEN</span></div>
+            <div class="proof-visuals"><figure><img src="assets/airdrop.webp" data-zoom alt="FramerSnap AirDrop" loading="lazy" /><figcaption data-i18n="g5_cap">多选与 AirDrop</figcaption></figure></div>
+          </article>
+
+          <article class="proof-card wide reveal">
+            <div class="proof-card-head"><div><span data-i18n="g6_badge">06 / SELECT</span><h3 data-i18n="g6_h3">边看边挑，把喜欢的留在精选</h3><p data-i18n="g6_p">从选择方式到精选结果，挑片过程始终围绕底部胶片带连续发生。</p></div><span>2 SCREENS</span></div>
+            <div class="proof-visuals two">
+              <figure><img src="assets/select.webp" data-zoom alt="FramerSnap 精选" loading="lazy" /><figcaption data-i18n="g6_cap1">多选与精选策略</figcaption></figure>
+              <figure><img src="assets/select-2.webp" data-zoom alt="FramerSnap 挑图" loading="lazy" /><figcaption data-i18n="g6_cap2">胶片带快速挑图</figcaption></figure>
+            </div>
+          </article>
+
+          <article class="proof-card wide reveal">
+            <div class="proof-card-head"><div><span data-i18n="g7_badge">07 / EXPORT</span><h3 data-i18n="g7_h3">批量转换与压缩，一次收尾</h3><p data-i18n="g7_p">统一处理选中照片的格式、尺寸和输出目录，交付状态清楚可见。</p></div><span>1 SCREEN</span></div>
+            <div class="proof-visuals"><figure><img src="assets/export.webp" data-zoom alt="FramerSnap 导出" loading="lazy" /><figcaption data-i18n="g7_cap">批量格式转换与压缩</figcaption></figure></div>
+          </article>
+
+          <article class="proof-card wide reveal">
+            <div class="proof-card-head"><div><span data-i18n="g8_badge">08 / FRAME</span><h3 data-i18n="g8_h3">从参数到成片，大师相框完整过程</h3><p data-i18n="g8_p">预设选择、视觉参数与最终效果同时呈现，让照片以更完整的方式被观看。</p></div><span>3 SCREENS</span></div>
+            <div class="proof-visuals three">
+              <figure><img src="assets/frame-1.webp" data-zoom alt="FramerSnap 相框编辑" loading="lazy" /><figcaption data-i18n="g8_cap1">相框实时编辑</figcaption></figure>
+              <figure><img src="assets/frame-2.webp" data-zoom alt="FramerSnap 相框预设" loading="lazy" /><figcaption data-i18n="g8_cap2">相框预设效果</figcaption></figure>
+              <figure><img src="assets/frame-3.webp" data-zoom alt="FramerSnap 成品呈现" loading="lazy" /><figcaption data-i18n="g8_cap3">作品最终呈现</figcaption></figure>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="toolkit">
+      <div class="wrap">
+        <div class="toolkit-head reveal">
+          <div class="section-label" style="justify-content:center" data-i18n="tool_label">More in the flow</div>
+          <h2 data-i18n-html="tool_h2">该有的，都在手边。<br>不该有的，不来打扰。</h2>
+          <p data-i18n="tool_desc">每一项能力都服务于同一件事：更快看清、更快选定、更体面地交付。</p>
+        </div>
+        <div class="tool-grid">
+          <article class="tool reveal"><div class="tool-icon">↗</div><span class="arrow">↗</span><h3 data-i18n="t1_h3">AirDrop 就在选择之后</h3><p data-i18n="t1_p">多选照片后直接发给身边的人，不必先导出到另一个目录，再重新选择一遍。</p></article>
+          <article class="tool reveal"><div class="tool-icon">i</div><span class="arrow">↗</span><h3 data-i18n="t2_h3">信息随时可查</h3><p data-i18n="t2_p">文件信息和拍摄参数就地展开，确认细节不打断浏览。</p></article>
+          <article class="tool reveal"><div class="tool-icon">⌁</div><span class="arrow">↗</span><h3 data-i18n="t3_h3">批量转换格式</h3><p data-i18n="t3_p">HEIC、WebP、PNG、TIFF、RAW 等格式可统一转换为 JPG。</p></article>
+          <article class="tool reveal"><div class="tool-icon">⇲</div><span class="arrow">↗</span><h3 data-i18n="t4_h3">批量压缩尺寸</h3><p data-i18n="t4_p">交付前集中处理文件体积与尺寸，不再逐张重复操作。</p></article>
+          <article class="tool reveal"><div class="tool-icon">□</div><span class="arrow">↗</span><h3 data-i18n="t5_h3">快速定位原文件</h3><p data-i18n="t5_p">需要进入文件系统时，直接定位当前图片，不再凭文件名搜索。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+      <div class="wrap">
+        <div class="pricing-head reveal">
+          <div class="section-label" style="justify-content:center" data-i18n="price_label">Pricing & Plans</div>
+          <h2 data-i18n="price_h2">透明定价，随心所选</h2>
+          <p data-i18n="price_desc">免费版即足以应对日常看图与轻挑图；升级 Pro，解锁无拘无束的批量工作流与大师装裱。</p>
+        </div>
+
+        <div class="pricing-grid reveal">
+          <!-- Free Tier -->
+          <div class="pricing-card">
+            <div>
+              <h3 data-i18n="p_free_h3">Free 基础免费版</h3>
+              <div class="price" data-i18n-html="p_free_p">¥0 <span>/ 永久免费</span></div>
+              <div class="price-desc" data-i18n="p_free_sub">适合日常照片浏览、快速挑图与轻量参数查看。</div>
+              <ul class="pricing-features">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p_free_f1">全格式沉浸式看图（包含专业 RAW）</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p_free_f2">胶片带快速多选挑图与快捷移入精选</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p_free_f3">完整 EXIF 拍摄参数实时查看</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p_free_f4">5 款经典内置艺术相框直接导出</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p_free_f5">单次 ≤ 5 张批量转换 / 压缩 / 隔空投送</span></li>
+              </ul>
+            </div>
+            <a class="button ghost" href="#download" data-i18n="p_free_btn">免费下载使用</a>
+          </div>
+
+          <!-- Annual Tier -->
+          <div class="pricing-card">
+            <div>
+              <h3 data-i18n="p_ann_h3">Pro 年度订阅</h3>
+              <div class="price" data-i18n-html="p_ann_p">¥15.00 <span>/ 年</span></div>
+              <div class="price-desc" data-i18n="p_ann_sub">低至每月仅 ¥1.25，灵活畅享全部大师特权。</div>
+              <ul class="pricing-features">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p_ann_f1">包含基础免费版全部功能</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n-html="p_ann_f2"><strong>解锁全部 11+ 款大师级艺术相框</strong></span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n-html="p_ann_f3"><strong>无限制批量图片极速格式转换</strong></span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n-html="p_ann_f4"><strong>无限制智能零反弹无损压缩</strong></span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n-html="p_ann_f5"><strong>无限制批量多选相框渲染导出</strong></span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p_ann_f6">无限制多选隔空投送 (AirDrop)</span></li>
+              </ul>
+            </div>
+            <a class="button" href="https://apps.apple.com/app/framersnap/id6742567890" target="_blank" rel="noopener" data-i18n="p_ann_btn">App 内订阅年费</a>
+          </div>
+
+          <!-- Lifetime Tier (Featured) -->
+          <div class="pricing-card featured">
+            <span class="pricing-badge" data-i18n="p_life_badge">首发限时早鸟</span>
+            <div>
+              <h3 data-i18n="p_life_h3">Pro 终身买断授权</h3>
+              <div class="price" data-i18n-html="p_life_p">¥29.90 <span>/ 一次性买断</span></div>
+              <div class="price-desc" data-i18n="p_life_sub">一次付费，终身使用，永久尊享未来所有升级。</div>
+              <ul class="pricing-features">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p_life_f1">包含 Pro 年度会员全部特权</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n-html="p_life_f2"><strong>一次购买，永久授权，零后续费用</strong></span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p_life_f3">支持家庭共享与多台 Mac 凭证同步</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p_life_f4">未来新增大师相框与高级排版直接解锁</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="p_life_f5">优先技术支持与功能需求通道</span></li>
+              </ul>
+            </div>
+            <a class="button" style="background:var(--blue);color:#fff;" href="https://apps.apple.com/app/framersnap/id6742567890" target="_blank" rel="noopener" data-i18n="p_life_btn">立即买断 Pro</a>
+          </div>
+        </div>
+
+        <div class="pricing-note reveal" data-i18n="price_note">
+          * 付费交易均通过 Apple 官方 StoreKit 2 安全通道结算，受 Apple 隐私保护；年度订阅可随时在 Apple ID 设置中自主管理或取消续订。
+        </div>
+      </div>
+    </section>
+
+    <section class="quote"><div class="wrap reveal"><blockquote data-i18n-html="quote_text">“好的看图工具，不该让人感觉自己在操作软件。<br><span>它只该让下一张照片，更快来到眼前。”</span></blockquote></div></section>
+
+    <section class="closing" id="download">
+      <div class="wrap inner reveal">
+        <h2 data-i18n-html="close_h2">把时间留给<br><span class="gradient-word">真正想留下的。</span></h2>
+        <p data-i18n="close_p">FramerSnap，为 macOS 打造的轻快照片工作流。</p>
+        <div class="actions" style="margin-bottom: 20px;">
+          <a class="appstore-badge" href="https://apps.apple.com/app/framersnap/id6742567890" target="_blank" rel="noopener" aria-label="Download on the Mac App Store">
+            <svg width="170" height="52" viewBox="0 0 170 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="170" height="52" rx="10" fill="#000" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+              <path d="M35.6 26.2c0-3.3 2.7-4.9 2.8-5-1.5-2.2-4-2.5-4.8-2.6-2-.2-4 1.2-5.1 1.2-1 0-2.6-1.2-4.3-1.2-2.2 0-4.3 1.3-5.4 3.3-2.3 4-0.6 9.9 1.6 13.2 1.1 1.6 2.4 3.4 4.1 3.3 1.7-.1 2.3-1.1 4.3-1.1 2 0 2.5 1.1 4.3 1.1 1.8 0 3-1.6 4.1-3.2 1.3-1.9 1.8-3.7 1.8-3.8-0.1 0-3.5-1.3-3.5-5.2zM31.8 16.5c0.9-1.1 1.5-2.6 1.3-4.1-1.3 0.1-2.9 0.9-3.8 2-0.8 0.9-1.5 2.5-1.3 4 1.5 0.1 2.9-0.8 3.8-1.9z" fill="#FFF"/>
+              <text x="50" y="20" fill="#A6A6A6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="500" letter-spacing="0.2">Download on the</text>
+              <text x="50" y="36" fill="#FFF" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="16" font-weight="600" letter-spacing="-0.3">Mac App Store</text>
+            </svg>
+          </a>
+        </div>
+        <div class="system-note" data-i18n="close_sysnote">支持 Apple Silicon · macOS 14.0 及以上 · 纯本地沙盒运行</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <a class="brand" href="#top"><img class="brand-logo" src="assets/app-logo.png" alt="FramerSnap Logo" style="width:24px;height:24px;" /><span>FramerSnap</span></a>
+      <span data-i18n="footer_rights">© 2026 FramerSnap. All rights reserved.</span>
+    </div>
+    <div class="footer-links">
+      <a href="privacy.html" data-i18n="footer_privacy">隐私政策</a>
+      <a href="terms.html" data-i18n="footer_terms">服务条款 (EULA)</a>
+      <a href="support.html" data-i18n="footer_support">技术支持与 FAQ</a>
+      <a href="mailto:jentle_vt@163.com">jentle_vt@163.com</a>
+    </div>
+  </footer>
+
+  <div class="lightbox" aria-hidden="true"><button aria-label="关闭图片预览">×</button><img alt="" /></div>
+  <script>
+    const nav = document.querySelector('.nav-shell');
+    addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 24), { passive:true });
+
+    const stage = document.querySelector('.stage-window');
+    const stageImage = document.getElementById('stage-image');
+    const note = document.querySelector('.float-note');
+    document.querySelectorAll('.stage-tab').forEach(tab => tab.addEventListener('click', () => {
+      if (tab.classList.contains('active')) return;
+      document.querySelectorAll('.stage-tab').forEach(item => { item.classList.remove('active'); item.setAttribute('aria-selected','false'); });
+      tab.classList.add('active'); tab.setAttribute('aria-selected','true'); stage.classList.add('switching');
+      setTimeout(() => { 
+        stageImage.src = tab.dataset.image;
+        const lang = window.FramoI18n ? window.FramoI18n.getLang() : 'zh';
+        const dict = window.FramoI18n ? window.FramoI18n.translations[lang] : {};
+        const titleKey = tab.dataset.titleKey;
+        const noteKey = tab.dataset.noteKey;
+        const titleText = (dict && dict[titleKey]) || tab.querySelector('strong').textContent;
+        const noteText = (dict && dict[noteKey]) || '';
+        stageImage.alt = titleText; 
+        note.querySelector('b').textContent = titleText; 
+        note.querySelector('p').textContent = noteText; 
+        stage.classList.remove('switching'); 
+      }, 180);
+    }));
+
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => { if(entry.isIntersecting){ entry.target.classList.add('in'); observer.unobserve(entry.target); } }), { threshold:.12, rootMargin:'0px 0px -30px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const lightbox = document.querySelector('.lightbox'); const lightboxImage = lightbox.querySelector('img');
+    document.addEventListener('click', event => { const image = event.target.closest('[data-zoom]'); if(!image) return; lightboxImage.src = image.currentSrc || image.src; lightboxImage.alt = image.alt; lightbox.classList.add('open'); lightbox.setAttribute('aria-hidden','false'); document.body.classList.add('no-scroll'); });
+    const closeLightbox = () => { lightbox.classList.remove('open'); lightbox.setAttribute('aria-hidden','true'); lightboxImage.src=''; document.body.classList.remove('no-scroll'); };
+    lightbox.querySelector('button').addEventListener('click',closeLightbox); lightbox.addEventListener('click',event => { if(event.target === lightbox) closeLightbox(); }); addEventListener('keydown',event => { if(event.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>
